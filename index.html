@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>नागरिक प्रतिक्रिया फॉर्म - बिलासपुर पुलिस</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f1a3d, #1e3c72);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        .police-badge {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .badge-icon {
+            font-size: 32px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .form-body {
+            padding: 30px;
+        }
+
+        .form-section {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 20px;
+        }
+
+        .form-section h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .required {
+            color: #dc3545;
+            margin-left: 3px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #4a6fc1;
+        }
+
+        select.form-control {
+            cursor: pointer;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .rating-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .star-btn {
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: #f4f6fb;
+            color: #cfd7e3;
+            cursor: pointer;
+            font-size: 28px;
+            line-height: 1;
+            transition: all 0.2s ease;
+        }
+
+        .star-btn:hover {
+            color: #ffc107;
+            background: #fff7dd;
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        .star-btn.is-active {
+            color: #ffc107;
+            background: #fff7dd;
+        }
+
+        .star-scale {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            max-width: 270px;
+            color: #6c757d;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .rating-value {
+            font-size: 13px;
+            color: #1e3c72;
+            font-weight: 600;
+            min-height: 18px;
+        }
+
+        .yesno-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .yesno-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .dropdown-options {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+
+        .checkbox-option:hover {
+            background: #f8f9ff;
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .checkbox-option label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: normal;
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .checkbox-hint {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-reset {
+            background: #6c757d;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            z-index: 10000;
+            animation: slideInRight 0.3s ease;
+            max-width: 400px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .notification.success { background: #28a745; }
+        .notification.error { background: #dc3545; }
+        .notification.warning { background: #ffc107; color: #333; }
+        .notification.info { background: #17a2b8; }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #6c757d;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #dee2e6;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .info-note {
+            background: #e7f3ff;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #004085;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .form-body { padding: 20px; }
+            .star-rating { gap: 8px; }
+            .star-btn { width: 40px; height: 40px; font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <i class="fas fa-info-circle"></i>
+            <span id="notificationMessage"></span>
+        </div>
+        <button onclick="hideNotification()" style="background: none; border: none; color: white; font-size: 20px; margin-left: 15px; cursor: pointer;">&times;</button>
+    </div>
+
+    <div class="form-container">
+        <div class="header">
+            <div class="police-badge">
+                <i class="fas fa-shield-alt badge-icon"></i>
+            </div>
+            <h1>नागरिक प्रतिक्रिया फॉर्म</h1>
+            <p>"आपकी राय, बेहतर पुलिसिंग की नींव" — जिला पुलिस मुख्यालय, बिलासपुर (छत्तीसगढ़)</p>
+            <p style="font-size: 12px; margin-top: 8px;">नोट: यह फॉर्म पूरी तरह से डायनामिक है। सभी प्रश्न व्यवस्थापक द्वारा जोड़े जाते हैं।</p>
+        </div>
+
+        <div class="form-body">
+            <div class="info-note">
+                <i class="fas fa-info-circle"></i>
+                <span>कृपया अपनी ईमानदार प्रतिक्रिया दें। आपकी जानकारी गोपनीय रखी जाएगी।</span>
+            </div>
+
+            <form id="feedbackForm">
+                <div id="dynamicQuestionsContainer"></div>
+                <button type="button" class="btn-submit" id="submitBtn" onclick="submitFeedback()">
+                    <i class="fas fa-paper-plane"></i> प्रतिक्रिया सबमिट करें
+                </button>
+                <button type="button" class="btn-reset" onclick="resetForm()">
+                    <i class="fas fa-undo-alt"></i> फॉर्म रीसेट करें
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = window.location.origin || 'http://localhost:5000';
+        
+        const policeStations = [
+            "तोरवा थाना", "सिविल लाइन थाना", "कोनी", "सरकंडा थाना",
+            "मोपका थाना", "हिर्री थाना", "मगरवाड़ा थाना", "राजीव नगर थाना",
+            "बिलासपुर रेलवे थाना", "महिला थाना", "साइबर थाना", "ट्रैफिक थाना",
+            "सिटी कोतवाली", "तरबहार", "सिरगिट्टी", "आजक", "चकरभाठा", "बिल्हा",
+            "रतनपुर", "सीपत", "मस्तूरी", "कोटा", "तखतपुर", "पचपेड़ी", "सकरी"
+        ];
+
+        const visitReasons = [
+            "FIR दर्ज कराने", "शिकायत आवेदन", "पासपोर्ट/वीजा सत्यापन",
+            "गुमशुदगी / खोई वस्तु", "पुलिस दुर्व्यवहार शिकायत",
+            "पुलिस द्वारा बुलाए जाने पर", "अन्य"
+        ];
+
+        const visitFrequencies = ["पहली बार", "दूसरी बार", "कई बार (3+)"];
+
+        let customQuestions = [];
+
+        function showNotification(message, type) {
+            var notification = document.getElementById('notification');
+            notification.className = 'notification ' + type;
+            document.getElementById('notificationMessage').innerText = message;
+            notification.style.display = 'flex';
+            setTimeout(function() {
+                notification.style.display = 'none';
+            }, 4000);
+        }
+
+        function hideNotification() {
+            document.getElementById('notification').style.display = 'none';
+        }
+
+        function showLoading(show) {
+            var submitBtn = document.getElementById('submitBtn');
+            if (submitBtn) {
+                submitBtn.disabled = show;
+            }
+            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            var div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        async function fetchQuestionsFromAPI() {
+            try {
+                var response = await fetch(API_BASE_URL + '/api/questions');
+                var data = await response.json();
+                if (response.ok && data && data.success) {
+                    return data.questions;
+                }
+                return [];
+            } catch (error) {
+                console.error('Error fetching questions:', error);
+                return [];
+            }
+        }
+
+        async function submitFeedbackToAPI(feedback) {
+            try {
+                var response = await fetch(API_BASE_URL + '/api/feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(feedback)
+                });
+                var data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error submitting feedback:', error);
+                throw error;
+            }
+        }
+
+        function createStarRatingMarkup(question) {
+            var questionName = 'q_' + question.id;
+            var stars = '';
+            for (var i = 1; i <= 5; i++) {
+                stars += '<button type="button" class="star-btn" data-rating-target="' + questionName + '" data-rating-value="' + i + '"><i class="fas fa-star"></i></button>';
+            }
+            return '<div class="rating-group">' +
+                '<input type="hidden" class="rating-input" name="' + questionName + '" value="" data-question-id="' + question.id + '" data-question="' + escapeHtml(question.text) + '">' +
+                '<div class="star-rating" data-rating-group="' + questionName + '">' + stars + '</div>' +
+                '<div class="star-scale"><span>1 Star</span><span>2</span><span>3</span><span>4</span><span>5 Stars</span></div>' +
+                '<div class="rating-value" data-rating-label="' + questionName + '">Select a rating</div>' +
+                '</div>';
+        }
+
+        function updateStarRating(groupName, value) {
+            var group = document.querySelector('[data-rating-group="' + groupName + '"]');
+            var input = document.querySelector('input[name="' + groupName + '"]');
+            var label = document.querySelector('[data-rating-label="' + groupName + '"]');
+            if (!group || !input) return;
+            var numericValue = Number(value);
+            input.value = numericValue;
+            var btns = group.querySelectorAll('.star-btn');
+            for (var i = 0; i < btns.length; i++) {
+                var btn = btns[i];
+                var starValue = Number(btn.getAttribute('data-rating-value'));
+                if (starValue <= numericValue) {
+                    btn.classList.add('is-active');
+                } else {
+                    btn.classList.remove('is-active');
+                }
+            }
+            if (label) {
+                label.textContent = numericValue + ' ' + (numericValue === 1 ? 'Star' : 'Stars') + ' selected';
+            }
+        }
+
+        function resetStarRating(groupName) {
+            var group = document.querySelector('[data-rating-group="' + groupName + '"]');
+            var input = document.querySelector('input[name="' + groupName + '"]');
+            var label = document.querySelector('[data-rating-label="' + groupName + '"]');
+            if (!group || !input) return;
+            input.value = '';
+            var btns = group.querySelectorAll('.star-btn');
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].classList.remove('is-active');
+            }
+            if (label) {
+                label.textContent = 'Select a rating';
+            }
+        }
+
+        function bindStarRatings(scope) {
+            var groups = scope.querySelectorAll('.star-rating');
+            for (var i = 0; i < groups.length; i++) {
+                var group = groups[i];
+                if (group.getAttribute('data-bound') === 'true') continue;
+                group.setAttribute('data-bound', 'true');
+                var groupName = group.getAttribute('data-rating-group');
+                var btns = group.querySelectorAll('.star-btn');
+                for (var j = 0; j < btns.length; j++) {
+                    var btn = btns[j];
+                    btn.addEventListener('click', (function(gn, val) {
+                        return function() { updateStarRating(gn, val); };
+                    })(groupName, btn.getAttribute('data-rating-value')));
+                }
+            }
+        }
+
+        function bindCheckboxEvents() {
+            var checkboxes = document.querySelectorAll('.checkbox-input');
+            for (var i = 0; i < checkboxes.length; i++) {
+                var cb = checkboxes[i];
+                cb.removeEventListener('change', handleCheckboxChange);
+                cb.addEventListener('change', handleCheckboxChange);
+            }
+        }
+
+        function handleCheckboxChange() {
+            var questionId = this.getAttribute('data-question-id');
+            var hiddenInput = document.getElementById('hidden_' + questionId);
+            if (hiddenInput) {
+                var selectedValues = [];
+                var checkboxes = document.querySelectorAll('.checkbox-input[data-question-id="' + questionId + '"]:checked');
+                for (var i = 0; i < checkboxes.length; i++) {
+                    selectedValues.push(checkboxes[i].value);
+                }
+                hiddenInput.value = JSON.stringify(selectedValues);
+            }
+        }
+
+        function renderDynamicQuestions() {
+            var container = document.getElementById('dynamicQuestionsContainer');
+            if (!container) return;
+            if (customQuestions.length === 0) {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-database"></i><h3>कोई प्रश्न उपलब्ध नहीं है</h3><p>इस फॉर्म में अभी कोई प्रश्न नहीं जोड़ा गया है।</p><p>कृपया व्यवस्थापक डैशबोर्ड से प्रश्न जोड़ें।</p></div>';
+                return;
+            }
+            var html = '';
+            html += '<div class="form-section">';
+            html += '<h3><i class="fas fa-building"></i> थाना/चौकी की जानकारी</h3>';
+            html += '<div class="form-group">';
+            html += '<label>थाना/चौकी का नाम <span class="required">*</span></label>';
+            html += '<select class="form-control" id="stationName" required>';
+            html += '<option value="">-- थाना चुनें --</option>';
+            for (var s = 0; s < policeStations.length; s++) {
+                html += '<option value="' + escapeHtml(policeStations[s]) + '">' + escapeHtml(policeStations[s]) + '</option>';
+            }
+            html += '</select></div></div>';
+            html += '<div class="form-section">';
+            html += '<h3><i class="fas fa-calendar-alt"></i> यात्रा विवरण</h3>';
+            html += '<div class="form-group"><label>थाना जाने की तारीख <span class="required">*</span></label>';
+            html += '<input type="date" class="form-control" id="visitDate" required>';
+            html += '<small style="color: #6c757d; font-size: 12px;">कृपया वह तारीख चुनें जब आप थाना गए थे</small></div>';
+            html += '<div class="form-group"><label>थाना जाने का मुख्य कारण <span class="required">*</span></label>';
+            html += '<select class="form-control" id="visitReason" required><option value="">-- कारण चुनें --</option>';
+            for (var r = 0; r < visitReasons.length; r++) {
+                html += '<option value="' + escapeHtml(visitReasons[r]) + '">' + escapeHtml(visitReasons[r]) + '</option>';
+            }
+            html += '</select></div>';
+            html += '<div class="form-group"><label>अब तक इस थाने में कितनी बार आए? <span class="required">*</span></label>';
+            html += '<select class="form-control" id="visitFrequency" required><option value="">-- चुनें --</option>';
+            for (var f = 0; f < visitFrequencies.length; f++) {
+                html += '<option value="' + escapeHtml(visitFrequencies[f]) + '">' + escapeHtml(visitFrequencies[f]) + '</option>';
+            }
+            html += '</select></div></div>';
+            html += '<div class="form-section"><h3><i class="fas fa-comments"></i> आपकी प्रतिक्रिया</h3>';
+            for (var q = 0; q < customQuestions.length; q++) {
+                var question = customQuestions[q];
+                var questionNumber = q + 4;
+                html += '<div class="form-group" data-question-id="' + question.id + '">';
+                html += '<label>' + questionNumber + '. ' + escapeHtml(question.text) + ' <span style="color: #6c757d; font-size: 12px; font-weight: 400; margin-left: 6px;">(Optional)</span></label>';
+                if (question.type === 'text') {
+                    html += '<input type="text" class="form-control" name="q_' + question.id + '" data-question-id="' + question.id + '" data-question="' + escapeHtml(question.text) + '" id="input_' + question.id + '">';
+                } else if (question.type === 'textarea') {
+                    html += '<textarea class="form-control" name="q_' + question.id + '" data-question-id="' + question.id + '" data-question="' + escapeHtml(question.text) + '" rows="3" id="input_' + question.id + '"></textarea>';
+                } else if (question.type === 'rating') {
+                    html += createStarRatingMarkup(question);
+                } else if (question.type === 'yesno') {
+                    html += '<div class="yesno-group" id="input_' + question.id + '">';
+                    html += '<label class="yesno-option"><input type="radio" name="q_' + question.id + '" value="हाँ" data-question-id="' + question.id + '" data-question="' + escapeHtml(question.text) + '"><span>हाँ</span></label>';
+                    html += '<label class="yesno-option"><input type="radio" name="q_' + question.id + '" value="नहीं" data-question-id="' + question.id + '" data-question="' + escapeHtml(question.text) + '"><span>नहीं</span></label>';
+                    html += '</div>';
+                } else if (question.type === 'dropdown') {
+                    if (question.options && question.options.length > 0) {
+                        html += '<select class="dropdown-options" name="q_' + question.id + '" data-question-id="' + question.id + '" data-question="' + escapeHtml(question.text) + '" id="input_' + question.id + '">';
+                        html += '<option value="">-- विकल्प चुनें --</option>';
+                        for (var o = 0; o < question.options.length; o++) {
+                            html += '<option value="' + escapeHtml(question.options[o]) + '">' + escapeHtml(question.options[o]) + '</option>';
+                        }
+                        html += '</select>';
+                    } else {
+                        html += '<input type="text" class="form-control" name="q_' + question.id + '" placeholder="कोई विकल्प उपलब्ध नहीं" disabled>';
+                    }
+                } else if (question.type === 'checkbox') {
+                    if (question.options && question.options.length > 0) {
+                        html += '<div class="checkbox-group" id="input_' + question.id + '" data-question-id="' + question.id + '">';
+                        for (var opt = 0; opt < question.options.length; opt++) {
+                            var checkboxId = question.id + '_' + opt;
+                            html += '<div class="checkbox-option">';
+                            html += '<input type="checkbox" class="checkbox-input" name="q_' + question.id + '[]" value="' + escapeHtml(question.options[opt]) + '" id="' + checkboxId + '" data-question-id="' + question.id + '" data-question="' + escapeHtml(question.text) + '">';
+                            html += '<label for="' + checkboxId + '">' + escapeHtml(question.options[opt]) + '</label>';
+                            html += '</div>';
+                        }
+                        html += '</div>';
+                        html += '<input type="hidden" class="checkbox-hidden" name="q_' + question.id + '" data-question-id="' + question.id + '" data-question="' + escapeHtml(question.text) + '" id="hidden_' + question.id + '" value="">';
+                        html += '<small class="checkbox-hint"><i class="fas fa-info-circle"></i> आप एक से अधिक विकल्प चुन सकते हैं</small>';
+                    } else {
+                        html += '<input type="text" class="form-control" name="q_' + question.id + '" placeholder="कोई विकल्प उपलब्ध नहीं" disabled>';
+                    }
+                } else if (question.type === 'date') {
+                    html += '<input type="date" class="form-control" name="q_' + question.id + '" data-question-id="' + question.id + '" data-question="' + escapeHtml(question.text) + '" id="input_' + question.id + '">';
+                } else {
+                    html += '<input type="text" class="form-control" name="q_' + question.id + '" data-question-id="' + question.id + '" data-question="' + escapeHtml(question.text) + '" id="input_' + question.id + '">';
+                }
+                html += '</div>';
+            }
+            html += '</div>';
+            container.innerHTML = html;
+            bindStarRatings(container);
+            bindCheckboxEvents();
+        }
+
+        function resetForm() {
+            var stationName = document.getElementById('stationName');
+            var visitDate = document.getElementById('visitDate');
+            var visitReason = document.getElementById('visitReason');
+            var visitFrequency = document.getElementById('visitFrequency');
+            if (stationName) stationName.value = '';
+            if (visitDate) visitDate.value = '';
+            if (visitReason) visitReason.value = '';
+            if (visitFrequency) visitFrequency.value = '';
+            var inputs = document.querySelectorAll('.form-control:not(select)');
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].type !== 'checkbox' && inputs[i].type !== 'radio') {
+                    inputs[i].value = '';
+                }
+            }
+            var selects = document.querySelectorAll('select.form-control, select.dropdown-options');
+            for (var j = 0; j < selects.length; j++) {
+                selects[j].value = '';
+            }
+            var radios = document.querySelectorAll('input[type="radio"]');
+            for (var k = 0; k < radios.length; k++) {
+                radios[k].checked = false;
+            }
+            var checkboxes = document.querySelectorAll('.checkbox-input');
+            for (var l = 0; l < checkboxes.length; l++) {
+                checkboxes[l].checked = false;
+            }
+            var hiddenInputs = document.querySelectorAll('.checkbox-hidden');
+            for (var m = 0; m < hiddenInputs.length; m++) {
+                hiddenInputs[m].value = '';
+            }
+            var starGroups = document.querySelectorAll('.star-rating');
+            for (var n = 0; n < starGroups.length; n++) {
+                resetStarRating(starGroups[n].getAttribute('data-rating-group'));
+            }
+            showNotification('फॉर्म रीसेट कर दिया गया है', 'info');
+        }
+
+        async function submitFeedback() {
+            var submitBtn = document.getElementById('submitBtn');
+            if (submitBtn.disabled) return;
+            showLoading(true);
+            try {
+                var stationName = document.getElementById('stationName').value;
+                var visitDate = document.getElementById('visitDate').value;
+                var visitReason = document.getElementById('visitReason').value;
+                var visitFrequency = document.getElementById('visitFrequency').value;
+                if (!stationName || !visitDate || !visitReason || !visitFrequency) {
+                    showNotification('कृपया सभी आवश्यक जानकारी भरें', 'warning');
+                    showLoading(false);
+                    return;
+                }
+                var customAnswers = [];
+                var attachments = [];
+                for (var i = 0; i < customQuestions.length; i++) {
+                    var question = customQuestions[i];
+                    var answer = '';
+                    if (question.type === 'checkbox') {
+                        var hiddenInput = document.getElementById('hidden_' + question.id);
+                        if (hiddenInput && hiddenInput.value) {
+                            try {
+                                answer = JSON.parse(hiddenInput.value);
+                            } catch(e) {
+                                answer = hiddenInput.value ? [hiddenInput.value] : [];
+                            }
+                        } else {
+                            answer = [];
+                        }
+                    } else if (question.type === 'rating') {
+                        var ratingInput = document.querySelector('input[name="q_' + question.id + '"]');
+                        answer = ratingInput ? ratingInput.value : '';
+                    } else if (question.type === 'yesno') {
+                        var selected = document.querySelector('input[name="q_' + question.id + '"]:checked');
+                        answer = selected ? selected.value : '';
+                    } else {
+                        var element = document.getElementById('input_' + question.id);
+                        answer = element ? element.value : '';
+                    }
+                    var hasAnswer = (question.type === 'checkbox') ? (Array.isArray(answer) && answer.length > 0) : (answer && answer !== '');
+                    if (hasAnswer) {
+                        customAnswers.push({
+                            questionId: question.id,
+                            question: question.text,
+                            answer: answer,
+                            type: question.type
+                        });
+                    }
+                }
+                var overallRating = 3;
+                var ratingQuestions = customAnswers.filter(function(a) { return a.type === 'rating'; });
+                if (ratingQuestions.length > 0) {
+                    var totalRating = 0;
+                    var ratingCount = 0;
+                    for (var r = 0; r < ratingQuestions.length; r++) {
+                        var rating = parseInt(ratingQuestions[r].answer);
+                        if (!isNaN(rating)) {
+                            totalRating += rating;
+                            ratingCount++;
+                        }
+                    }
+                    if (ratingCount > 0) {
+                        overallRating = Math.round(totalRating / ratingCount);
+                    }
+                }
+                var feedback = {
+                    id: 'FB_' + Date.now() + '_' + Math.random().toString(36).substr(2, 8),
+                    station_name: stationName,
+                    visit_date: visitDate,
+                    reason: visitReason,
+                    frequency: visitFrequency,
+                    experience_rating: overallRating,
+                    customAnswers: customAnswers,
+                    timestamp: new Date().toISOString(),
+                    contact_info: '',
+                    officer_name: '',
+                    officer_rank: '',
+                    time_taken: '',
+                    fir_done: 'no',
+                    suggestions: '',
+                    attachments: attachments
+                };
+                var result = await submitFeedbackToAPI(feedback);
+                if (result && result.success) {
+                    showNotification('आपकी प्रतिक्रिया सफलतापूर्वक सबमिट हो गई! धन्यवाद।', 'success');
+                    resetForm();
+                } else {
+                    throw new Error(result && result.error ? result.error : 'Failed to save feedback');
+                }
+            } catch (error) {
+                console.error('Error submitting feedback:', error);
+                showNotification('प्रतिक्रिया सबमिट करने में त्रुटि हुई: ' + error.message, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function loadCustomQuestions() {
+            showLoading(true);
+            try {
+                customQuestions = await fetchQuestionsFromAPI();
+                customQuestions = customQuestions.filter(function(q) { return q.active !== false; });
+                renderDynamicQuestions();
+                if (customQuestions.length === 0) {
+                    showNotification('अभी कोई प्रश्न नहीं जोड़ा गया है। कृपया व्यवस्थापक से संपर्क करें।', 'info');
+                }
+            } catch (error) {
+                console.error('Error loading questions:', error);
+                showNotification('प्रश्न लोड करने में त्रुटि', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCustomQuestions();
+        });
+    </script>
+</body>
+</html>

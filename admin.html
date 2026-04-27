@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Police Feedback System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f1a3d, #1e3c72);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .police-badge {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .badge-icon {
+            font-size: 40px;
+            color: white;
+        }
+
+        h2 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #4a6fc1;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .forgot-password-link {
+            text-align: right;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .forgot-password-link a {
+            color: #4a6fc1;
+            font-size: 13px;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .forgot-password-link a:hover {
+            color: #1e3c72;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .error-message {
+            color: #dc3545;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .success-message {
+            color: #28a745;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .modal-container {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 420px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-container h3 {
+            color: #1e3c72;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .modal-container p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .modal-input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .modal-input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .modal-input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-input-group input:focus {
+            outline: none;
+            border-color: #4a6fc1;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-btn-primary {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(40, 167, 69, 0.3);
+        }
+
+        .modal-btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .modal-btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .close-modal-icon {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+            color: #aaa;
+            transition: color 0.2s;
+            margin-top: -10px;
+        }
+
+        .close-modal-icon:hover {
+            color: #333;
+        }
+
+        .password-strength {
+            font-size: 12px;
+            margin-top: 5px;
+            padding-left: 5px;
+        }
+
+        .strength-weak { color: #dc3545; }
+        .strength-medium { color: #fd7e14; }
+        .strength-strong { color: #28a745; }
+        
+        .security-hint {
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #495057;
+            margin-top: 5px;
+            border-left: 3px solid #4a6fc1;
+            text-align: left;
+        }
+        
+        .security-hint i {
+            margin-right: 6px;
+            color: #4a6fc1;
+        }
+    </style>
+</head>
+<body>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Forgot Password Modal: Step 1 - Verify Username -->
+    <div class="modal-overlay" id="forgotPasswordModal">
+        <div class="modal-container">
+            <i class="fas fa-times close-modal-icon" onclick="closeForgotPasswordModal()"></i>
+            <i class="fas fa-user-check" style="font-size: 48px; color: #4a6fc1; margin-bottom: 15px;"></i>
+            <h3>Verify Admin Identity</h3>
+            <p>Enter your admin username to begin password recovery.</p>
+            <div class="modal-input-group">
+                <label>Username</label>
+                <input type="text" id="resetUsername" placeholder="Enter your admin username" autocomplete="off">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-secondary" onclick="closeForgotPasswordModal()">Cancel</button>
+                <button class="modal-btn modal-btn-primary" onclick="verifyUsernameStep()">Verify & Continue</button>
+            </div>
+            <div id="modalMessage" style="margin-top: 15px; font-size: 13px; display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Security Question Modal: Step 2 - Answer Security Question -->
+    <div class="modal-overlay" id="securityQuestionModal">
+        <div class="modal-container">
+            <i class="fas fa-times close-modal-icon" onclick="closeSecurityQuestionModal()"></i>
+            <i class="fas fa-question-circle" style="font-size: 48px; color: #fd7e14; margin-bottom: 15px;"></i>
+            <h3>Security Verification</h3>
+            <p>Please answer the following security question to verify your identity.</p>
+            <div class="modal-input-group">
+                <label>Security Question</label>
+                <div class="security-hint">
+                    <i class="fas fa-school"></i> What is your school name?
+                </div>
+                <input type="text" id="securityAnswer" placeholder="Enter your answer" autocomplete="off" style="margin-top: 8px;">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-secondary" onclick="closeSecurityQuestionModal()">Cancel</button>
+                <button class="modal-btn modal-btn-primary" onclick="verifySecurityAnswer()">Verify Answer</button>
+            </div>
+            <div id="securityModalMessage" style="margin-top: 15px; font-size: 13px; display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Reset Password Modal: Step 3 - Set New Password -->
+    <div class="modal-overlay" id="resetPasswordModal">
+        <div class="modal-container">
+            <i class="fas fa-times close-modal-icon" onclick="closeResetPasswordModal()"></i>
+            <i class="fas fa-key" style="font-size: 48px; color: #28a745; margin-bottom: 15px;"></i>
+            <h3>Set New Password</h3>
+            <p>Create a strong new password for your admin account.</p>
+            <div class="modal-input-group">
+                <label>New Password</label>
+                <input type="password" id="newPassword" placeholder="Enter new password" autocomplete="off">
+                <div id="passwordStrengthMsg" class="password-strength"></div>
+            </div>
+            <div class="modal-input-group">
+                <label>Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm new password" autocomplete="off">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-secondary" onclick="closeResetPasswordModal()">Cancel</button>
+                <button class="modal-btn modal-btn-primary" onclick="resetPassword()">Reset Password</button>
+            </div>
+            <div id="resetModalMessage" style="margin-top: 15px; font-size: 13px; display: none;"></div>
+        </div>
+    </div>
+
+    <div class="login-container">
+        <div class="police-badge">
+            <i class="fas fa-shield-alt badge-icon"></i>
+        </div>
+        <h2>Admin Login</h2>
+        <p class="subtitle">Police Feedback System</p>
+        
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Enter username" autocomplete="username">
+        </div>
+        
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Enter password" autocomplete="current-password">
+        </div>
+        
+        <div class="forgot-password-link">
+            <a id="forgotPasswordBtn">Forgot Password?</a>
+        </div>
+        
+        <button class="login-btn" onclick="doLogin()">Login</button>
+        <div id="errorMessage" class="error-message"></div>
+        <div id="successMessage" class="success-message"></div>
+    </div>
+
+    <script>
+        const API_BASE_URL = window.location.origin;
+        let verifiedUsername = null;
+        let usernameVerifiedForSecurity = null; // Store username after first step
+
+        // ======================== SESSION MANAGEMENT ========================
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+                sessionStorage.clear();
+                location.reload(true);
+            }
+        });
+
+        const storedToken = sessionStorage.getItem('adminAuthToken');
+        if (storedToken) {
+            const expiry = sessionStorage.getItem('sessionExpiry');
+            if (expiry && Date.now() < parseInt(expiry)) {
+                window.location.replace(`${API_BASE_URL}/dashboard`);
+            } else {
+                sessionStorage.clear();
+            }
+        }
+
+        // ======================== HELPER FUNCTIONS ========================
+        function showLoading(show) {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) overlay.style.display = show ? 'flex' : 'none';
+        }
+
+        function showErrorMsg(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 4000);
+        }
+
+        function showSuccessMsg(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 4000);
+        }
+
+        // ======================== PASSWORD RESET FLOW (WITH SECURITY QUESTION) ========================
+        function openForgotPasswordModal() {
+            const modal = document.getElementById('forgotPasswordModal');
+            if (modal) {
+                document.getElementById('resetUsername').value = '';
+                const modalMsgDiv = document.getElementById('modalMessage');
+                modalMsgDiv.style.display = 'none';
+                modalMsgDiv.innerHTML = '';
+                modal.style.display = 'flex';
+                verifiedUsername = null;
+                usernameVerifiedForSecurity = null;
+            }
+        }
+
+        function closeForgotPasswordModal() {
+            const modal = document.getElementById('forgotPasswordModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        function closeSecurityQuestionModal() {
+            const modal = document.getElementById('securityQuestionModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.getElementById('securityAnswer').value = '';
+                const msgDiv = document.getElementById('securityModalMessage');
+                msgDiv.style.display = 'none';
+                msgDiv.innerHTML = '';
+            }
+        }
+        
+        // Step 1: Verify username exists
+        async function verifyUsernameStep() {
+            const username = document.getElementById('resetUsername').value.trim();
+            if (!username) {
+                showModalMessage('Please enter your admin username.', 'error', 'modalMessage');
+                return;
+            }
+            
+            const verifyBtn = document.querySelector('#forgotPasswordModal .modal-btn-primary');
+            const originalText = verifyBtn.innerText;
+            verifyBtn.innerText = 'Verifying...';
+            verifyBtn.disabled = true;
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/verify-username`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: username })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Store username temporarily for security question step
+                    usernameVerifiedForSecurity = username;
+                    showModalMessage('Username verified! Proceeding to security question...', 'success', 'modalMessage');
+                    setTimeout(() => {
+                        closeForgotPasswordModal();
+                        openSecurityQuestionModal();
+                    }, 1500);
+                } else {
+                    showModalMessage(data.error || 'Admin username not found.', 'error', 'modalMessage');
+                }
+            } catch (error) {
+                console.error('Verification error:', error);
+                showModalMessage('Unable to verify username. Please make sure the server is running.', 'error', 'modalMessage');
+            } finally {
+                verifyBtn.innerText = originalText;
+                verifyBtn.disabled = false;
+            }
+        }
+        
+        // Step 2: Open security question modal
+        function openSecurityQuestionModal() {
+            const modal = document.getElementById('securityQuestionModal');
+            if (modal) {
+                document.getElementById('securityAnswer').value = '';
+                const msgDiv = document.getElementById('securityModalMessage');
+                msgDiv.style.display = 'none';
+                msgDiv.innerHTML = '';
+                modal.style.display = 'flex';
+            }
+        }
+        
+        // Step 2: Verify security answer (expected answer: "vidyut grih" - case insensitive, trimmed)
+        async function verifySecurityAnswer() {
+            const answer = document.getElementById('securityAnswer').value.trim();
+            
+            if (!answer) {
+                showModalMessage('Please provide an answer to the security question.', 'error', 'securityModalMessage');
+                return;
+            }
+            
+            // Expected answer: "vidyut grih" (case-insensitive, spaces normalized)
+            const expectedAnswer = "vidyut grih";
+            const normalizedAnswer = answer.toLowerCase().replace(/\s+/g, ' ').trim();
+            const normalizedExpected = expectedAnswer.toLowerCase();
+            
+            if (normalizedAnswer === normalizedExpected) {
+                // Security answer correct! Now we can proceed to password reset
+                // Mark that user has passed both username verification AND security question
+                verifiedUsername = usernameVerifiedForSecurity;
+                
+                showModalMessage('Security answer correct! Redirecting to password reset...', 'success', 'securityModalMessage');
+                setTimeout(() => {
+                    closeSecurityQuestionModal();
+                    openResetPasswordModal();
+                }, 1500);
+            } else {
+                showModalMessage('Incorrect answer. Please try again or contact system administrator.', 'error', 'securityModalMessage');
+                // Clear the stored username on failure to maintain security
+                usernameVerifiedForSecurity = null;
+            }
+        }
+        
+        function showModalMessage(msg, type, modalId = 'modalMessage') {
+            const msgDiv = document.getElementById(modalId);
+            if (msgDiv) {
+                msgDiv.innerHTML = msg;
+                msgDiv.style.display = 'block';
+                msgDiv.style.color = type === 'success' ? '#28a745' : '#dc3545';
+                msgDiv.style.fontWeight = '500';
+                setTimeout(() => {
+                    if (msgDiv && msgDiv.style.display === 'block') {
+                        msgDiv.style.display = 'none';
+                    }
+                }, 3000);
+            }
+        }
+        
+        function openResetPasswordModal() {
+            const modal = document.getElementById('resetPasswordModal');
+            if (modal) {
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+                document.getElementById('passwordStrengthMsg').innerHTML = '';
+                const resetMsgDiv = document.getElementById('resetModalMessage');
+                resetMsgDiv.style.display = 'none';
+                resetMsgDiv.innerHTML = '';
+                modal.style.display = 'flex';
+                
+                const newPwdField = document.getElementById('newPassword');
+                const strengthListener = () => checkPasswordStrength(newPwdField.value);
+                newPwdField.removeEventListener('input', strengthListener);
+                newPwdField.addEventListener('input', strengthListener);
+            }
+        }
+        
+        function closeResetPasswordModal() {
+            const modal = document.getElementById('resetPasswordModal');
+            if (modal) {
+                modal.style.display = 'none';
+                verifiedUsername = null;
+                usernameVerifiedForSecurity = null;
+            }
+        }
+        
+        function checkPasswordStrength(password) {
+            const strengthMsg = document.getElementById('passwordStrengthMsg');
+            if (!password) {
+                strengthMsg.innerHTML = '';
+                return '';
+            }
+            
+            let strength = 0;
+            if (password.length >= 6) strength++;
+            if (password.length >= 10) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            
+            let strengthText = '';
+            let strengthClass = '';
+            if (strength <= 2) {
+                strengthText = 'Weak password';
+                strengthClass = 'strength-weak';
+            } else if (strength <= 4) {
+                strengthText = 'Medium password';
+                strengthClass = 'strength-medium';
+            } else {
+                strengthText = 'Strong password';
+                strengthClass = 'strength-strong';
+            }
+            strengthMsg.innerHTML = `<i class="fas fa-shield-alt"></i> ${strengthText}`;
+            strengthMsg.className = `password-strength ${strengthClass}`;
+            return strengthText;
+        }
+        
+        async function resetPassword() {
+            if (!verifiedUsername) {
+                showResetModalMessage('Session expired or verification incomplete. Please restart the password reset process.', 'error');
+                setTimeout(() => {
+                    closeResetPasswordModal();
+                    openForgotPasswordModal();
+                }, 1500);
+                return;
+            }
+            
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (!newPassword || !confirmPassword) {
+                showResetModalMessage('Please fill in both password fields.', 'error');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                showResetModalMessage('Password must be at least 6 characters long.', 'error');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                showResetModalMessage('Passwords do not match. Please try again.', 'error');
+                return;
+            }
+            
+            const resetBtn = document.querySelector('#resetPasswordModal .modal-btn-primary');
+            const originalText = resetBtn.innerText;
+            resetBtn.innerText = 'Resetting...';
+            resetBtn.disabled = true;
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/reset-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        username: verifiedUsername, 
+                        newPassword: newPassword
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResetModalMessage('✓ Password successfully reset! You can now login with your new password.', 'success');
+                    setTimeout(() => {
+                        closeResetPasswordModal();
+                        showSuccessMsg('Password has been reset successfully. Please login with your new password.');
+                        document.getElementById('password').value = '';
+                        verifiedUsername = null;
+                        usernameVerifiedForSecurity = null;
+                    }, 2000);
+                } else {
+                    showResetModalMessage(data.error || 'Failed to reset password. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Password reset error:', error);
+                showResetModalMessage('Unable to connect to server. Please make sure the server is running.', 'error');
+            } finally {
+                resetBtn.innerText = originalText;
+                resetBtn.disabled = false;
+            }
+        }
+        
+        function showResetModalMessage(msg, type) {
+            const msgDiv = document.getElementById('resetModalMessage');
+            if (msgDiv) {
+                msgDiv.innerHTML = msg;
+                msgDiv.style.display = 'block';
+                msgDiv.style.color = type === 'success' ? '#28a745' : '#dc3545';
+                msgDiv.style.fontWeight = '500';
+                setTimeout(() => {
+                    if (msgDiv && msgDiv.style.display === 'block') {
+                        msgDiv.style.display = 'none';
+                    }
+                }, 5000);
+            }
+        }
+        
+        // ======================== LOGIN FUNCTION ========================
+        async function doLogin() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            
+            if (!username || !password) {
+                showErrorMsg('Please enter username and password');
+                return;
+            }
+            
+            showLoading(true);
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    sessionStorage.setItem('adminAuthToken', data.token);
+                    sessionStorage.setItem('adminUser', data.username);
+                    sessionStorage.setItem('sessionExpiry', data.expiresAt.toString());
+                    
+                    showSuccessMsg('Login successful! Redirecting to dashboard...');
+                    
+                    setTimeout(() => {
+                        window.location.replace(`${API_BASE_URL}/dashboard`);
+                    }, 1000);
+                } else {
+                    showErrorMsg(data.error || 'Invalid username or password');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showErrorMsg('Unable to connect to server. Please make sure the server is running.');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // ======================== EVENT LISTENERS ========================
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                doLogin();
+            }
+        });
+        
+        document.getElementById('username').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                doLogin();
+            }
+        });
+        
+        const forgotBtn = document.getElementById('forgotPasswordBtn');
+        if (forgotBtn) {
+            forgotBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                openForgotPasswordModal();
+            });
+        }
+        
+        // Modal click-outside close handlers
+        const forgotModalOverlay = document.getElementById('forgotPasswordModal');
+        if (forgotModalOverlay) {
+            forgotModalOverlay.addEventListener('click', function(e) {
+                if (e.target === forgotModalOverlay) closeForgotPasswordModal();
+            });
+        }
+        
+        const securityModalOverlay = document.getElementById('securityQuestionModal');
+        if (securityModalOverlay) {
+            securityModalOverlay.addEventListener('click', function(e) {
+                if (e.target === securityModalOverlay) closeSecurityQuestionModal();
+            });
+        }
+        
+        const resetModalOverlay = document.getElementById('resetPasswordModal');
+        if (resetModalOverlay) {
+            resetModalOverlay.addEventListener('click', function(e) {
+                if (e.target === resetModalOverlay) closeResetPasswordModal();
+            });
+        }
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const resetModal = document.getElementById('resetPasswordModal');
+                const securityModal = document.getElementById('securityQuestionModal');
+                const forgotModal = document.getElementById('forgotPasswordModal');
+                if (resetModal && resetModal.style.display === 'flex') {
+                    closeResetPasswordModal();
+                } else if (securityModal && securityModal.style.display === 'flex') {
+                    closeSecurityQuestionModal();
+                } else if (forgotModal && forgotModal.style.display === 'flex') {
+                    closeForgotPasswordModal();
+                }
+            }
+        });
+        
+        // Add Enter key support for security answer field
+        const securityAnswerField = document.getElementById('securityAnswer');
+        if (securityAnswerField) {
+            securityAnswerField.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    verifySecurityAnswer();
+                }
+            });
+        }
+        
+        console.log('Police Feedback System - Admin Login Ready (Enhanced Security: Username + Security Question)');
+        console.log('Server URL:', API_BASE_URL);
+        console.log('Default credentials: Username: admin, Password: admin123');
+        console.log('Password reset flow: Verify username -> Answer security question (What is your school name? Answer: vidyut grih) -> Set new password');
+        console.log('Security answer expected: vidyut grih (case-insensitive)');
+    </script>
+</body>
+</html>
