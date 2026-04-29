@@ -4,22 +4,37 @@
 open mongodb and connect with database (police_feedback_system)
 </br>
 collection 1 - feedbacksubmissions
+</br>
 collection 2 - questions
+</br>
 collection 3 - 
+</br>
 
 
-1) open cmd as administrator and type these commands 
+1) open cmd as administrator and type these commands
+ </br>
       net start mongodb
-      sc query mongodb 
+   </br>
+      sc query mongodb
+   </br>
       cd (set path)
-      npm run dev 
+   </br>
+      npm run dev
+   </br>
 
 open  http://localhost:5000  ( to view feedback form in you browser )
+</br>
 
 open  [http://localhost:5000](http://localhost:5000/admin)  ( to view admin login in you browser )
+</br>
 
-2) open cmd as administrator and type this commands 
+2) open cmd as administrator and type this commands
+</br>
       cd (set path)
+   </br>
       python report_service.py
-  it will use port 5001 
-  follow these steps to enable report generating 
+   </br>
+  it will use port 5001
+</br>
+  follow these steps to enable report generating
+</br>
