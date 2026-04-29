@@ -38,3 +38,13 @@ open http://localhost:5000/admin ( to view admin login in you browser )
 </br>
   follow these steps to enable report generating
 </br>
+
+### packages needs to be installed -
+
+#### node.js packages 
+npm install express cors bcryptjs jsonwebtoken 
+</br>
+npm install -D nodemon 
+
+#### python packages - 
+pip install flask flask-cors pymongo flask-bcrypt pyjwt
