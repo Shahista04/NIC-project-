@@ -673,7 +673,7 @@ async function startServer() {
         console.log(`   - MongoDB: ${MONGODB_URI}`);
         console.log(`\n📝 Default Admin Credentials:`);
         console.log(`   Username: admin`);
-        console.log(`   Password: admin123`);
+        console.log(`   Password: `);
         console.log(`\n🔐 Passwords are stored securely in MongoDB with bcrypt hashing\n`);
         console.log(`🔍 Debug Endpoints:`);
         console.log(`   - Database Info: http://localhost:${PORT}/api/debug/database`);
