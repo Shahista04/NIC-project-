@@ -8,37 +8,27 @@ collection 1 - feedbacksubmissions
 collection 2 - questions
 </br>
 collection 3 - 
+##### open cmd as administrator and type these commands
+net start mongodb
 </br>
-
-
-1) open cmd as administrator and type these commands
- </br>
-      net start mongodb
-   </br>
-      sc query mongodb
-   </br>
-      cd (set path)
-   </br>
-      npm run dev
-   </br>
-
+sc query mongodb
+</br>
+cd (set path)
+</br>
+npm run dev
+</br>
 open  http://localhost:5000  ( to view feedback form in you browser )
 </br>
-
 open http://localhost:5000/admin ( to view admin login in you browser )
 </br>
-
-2) open cmd as administrator and type this commands
+##### open cmd as administrator and type this commands
+cd (set path)
 </br>
-      cd (set path)
-   </br>
-      python report_service.py
-   </br>
-  it will use port 5001
+python report_service.py
 </br>
-  follow these steps to enable report generating
+it will use port 5001
 </br>
-
+follow these steps to enable report generating
 ### packages needs to be installed -
 
 #### node.js packages 
