@@ -25,7 +25,7 @@ collection 3 -
 open  http://localhost:5000  ( to view feedback form in you browser )
 </br>
 
-open  [[http://localhost:5000](http://localhost:5000/admin) ](http://localhost:5000/admin) ( to view admin login in you browser )
+open http://localhost:5000/admin ( to view admin login in you browser )
 </br>
 
 2) open cmd as administrator and type this commands
